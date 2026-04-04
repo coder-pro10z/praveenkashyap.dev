@@ -240,6 +240,27 @@ function isAtPageBottom() {
   return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 8;
 }
 
+function setupIntroPrompt() {
+  const prompt = document.querySelector(".intro-prompt");
+
+  if (!prompt) {
+    return;
+  }
+
+  window.requestAnimationFrame(() => {
+    prompt.classList.add("intro-prompt--visible");
+  });
+
+  window.setTimeout(() => {
+    prompt.classList.add("intro-prompt--exit");
+    document.dispatchEvent(new CustomEvent("grid-intro-wave"));
+  }, 1700);
+
+  window.setTimeout(() => {
+    prompt.remove();
+  }, 2800);
+}
+
 function getNextSectionTarget() {
   const orderedSections = [
     document.querySelector(".hero"),
@@ -339,6 +360,21 @@ function setupGridRippleEffect() {
     });
   }
 
+  function queueGlobalCharge(x, y, strength = 1, delay = 0) {
+    globalCharges.push({
+      x,
+      y,
+      start: performance.now() + delay,
+      strength,
+      maxDistance: Math.max(
+        Math.hypot(x, y),
+        Math.hypot(window.innerWidth - x, y),
+        Math.hypot(x, window.innerHeight - y),
+        Math.hypot(window.innerWidth - x, window.innerHeight - y)
+      )
+    });
+  }
+
   function drawDot(x, y, alpha, radius) {
     context.beginPath();
     context.arc(x, y, radius, 0, Math.PI * 2);
@@ -397,6 +433,11 @@ function setupGridRippleEffect() {
     for (let index = globalCharges.length - 1; index >= 0; index -= 1) {
       const charge = globalCharges[index];
       const elapsed = now - charge.start;
+
+      if (elapsed < 0) {
+        continue;
+      }
+
       const totalDuration = gridEffectConfig.globalChargeDuration + gridEffectConfig.globalChargeTailDuration;
       const progress = elapsed / totalDuration;
 
@@ -576,7 +617,26 @@ function setupGridRippleEffect() {
     pointer.targetY = touch.clientY;
     pointer.x = touch.clientX;
     pointer.y = touch.clientY;
+    pointer.lastTrigger = event.timeStamp;
     addRipple(pointer.x, pointer.y, 1.1);
+  }
+
+  function handleTouchMove(event) {
+    const touch = event.touches[0];
+
+    if (!touch) {
+      return;
+    }
+
+    pointer.active = true;
+    pointer.displayActive = true;
+    pointer.targetX = touch.clientX;
+    pointer.targetY = touch.clientY;
+
+    if (event.timeStamp - pointer.lastTrigger > gridEffectConfig.hoverThrottleMs) {
+      addRipple(pointer.targetX, pointer.targetY, 0.42);
+      pointer.lastTrigger = event.timeStamp;
+    }
   }
 
   function handleTouchEnd() {
@@ -595,7 +655,27 @@ function setupGridRippleEffect() {
   window.addEventListener("pointerleave", handlePointerLeave);
   window.addEventListener("click", (event) => addRipple(event.clientX, event.clientY, 1));
   window.addEventListener("touchstart", handleTouchStart, { passive: true });
+  window.addEventListener("touchmove", handleTouchMove, { passive: true });
   window.addEventListener("touchend", handleTouchEnd, { passive: true });
+  window.addEventListener("touchcancel", handleTouchEnd, { passive: true });
+  document.addEventListener("grid-intro-wave", () => {
+    const steps = 5;
+    const topInset = Math.max(74, window.innerHeight * 0.12);
+    const verticalRange = Math.min(window.innerHeight * 0.16, 108);
+
+    for (let index = 0; index < steps; index += 1) {
+      const progress = steps === 1 ? 0 : index / (steps - 1);
+      const x = window.innerWidth - progress * (window.innerWidth * 0.52);
+      const y = topInset + progress * verticalRange;
+      const delay = index * 180;
+      const strength = 0.72 - progress * 0.08;
+
+      queueGlobalCharge(x, y, strength, delay);
+      window.setTimeout(() => {
+        addRipple(x, y, 0.64 - progress * 0.08);
+      }, delay);
+    }
+  });
   document.addEventListener("title-charge-hold-start", (event) => {
     activeHoldCharge = {
       x: event.detail.x,
@@ -665,6 +745,7 @@ function renderPortfolio(data) {
   const email = parseMarkdownEmail(profile.email);
 
   app.innerHTML = `
+    <div class="intro-prompt" role="status" aria-live="polite">Hold my Name!</div>
     <header class="topbar">
       <div class="container topbar__inner">
         <a class="brand" href="#top" aria-label="Home">
@@ -1106,6 +1187,7 @@ function setupTitleChargeEffect(titleElement) {
 
 renderPortfolio(portfolioData);
 setupGridRippleEffect();
+setupIntroPrompt();
 
 document.addEventListener("click", (event) => {
   const anchor = event.target.closest('a[href^="#"]');
