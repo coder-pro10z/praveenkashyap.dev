@@ -1234,7 +1234,7 @@ span.highlight {
 
 @media (max-width: 480px) {
   .container {
-    width: min(var(--container), calc(100% - 20px));
+    width: min(var(--container), calc(100% - 24px));
   }
 
   .brand__mark {
@@ -1249,7 +1249,7 @@ span.highlight {
   }
 
   .project-card {
-    padding: 16px;
+    padding: 18px;
   }
 
   .project-card__icon {
