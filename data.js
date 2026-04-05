@@ -12,7 +12,7 @@ const portfolioData = {
       resume: "./Praveen_Kashyap_Dotnet_resume.pdf",
       phone: "tel:+917394990738"
     },
-    brandMark: "PK",
+    brandMark: "</>",
     brandName: "Portfolio"
   },
 
@@ -67,6 +67,7 @@ const portfolioData = {
     {
       title: "Money Pilot",
       description: "Personal finance tracker with a clean service-layer backend and component-driven Angular frontend - focused on data accuracy, secure flows, and responsive UX.",
+      image: "./Image/Card_Image_1.jpg",
       highlights: [
         "Designed RESTful API endpoints using ASP.NET Core with Dependency Injection and repository pattern architecture",
         "Built a fully responsive Angular SPA with modular components and clean service abstractions",
@@ -86,6 +87,7 @@ const portfolioData = {
     {
       title: "RentIt",
       description: "Property rental marketplace with a flexible NoSQL data layer, interactive React UI, and secure booking workflows - designed to support multi-landlord listings at scale.",
+      image: "./Image/Card_Image_2.jpg",
       highlights: [
         "Designed a document-based MongoDB schema to support flexible listing attributes and efficient query patterns",
         "Developed reusable React components with search, filter, and booking flows",
@@ -103,14 +105,14 @@ const portfolioData = {
       demoLabel: ""
     },
     {
-      title: "Interview Prep Platform",
-      description: "Structured interview preparation platform for .NET and Angular developers - featuring Mock Quizzes, timed assessments, and a curated knowledge base across System Design, OOP, and Security.",
+      title: "FullStackMastery",
+      description: "A comprehensive full-stack assessment platform tailored for .NET and Angular developers.",
+      image: "./Image/Card_Image_3.jpg",
       highlights: [
-        "Engineered two evaluation modes: instant-feedback Mock Quizzes and timed 'Interview Ready' professional assessments",
-        "Curated a knowledge base spanning System Design, OOP, Backend, Frontend, Database, and Security topics",
-        "Built modular ASP.NET Core APIs with clean service-layer abstractions for scalable content delivery"
+        "Architected a modular ASP.NET Core backend utilizing Clean Architecture and SOLID principles to efficiently manage question banks, file parsing, and user progress analytics.",
+        "Developed a dynamic Angular frontend featuring instant-feedback mock quizzes, timed professional assessments, and curated technical study guides."
       ],
-      tech: [".NET Core", "Angular", "C#"],
+      tech: [".NET Core", "Angular", "C#", "SQL Server"],
       service: "Full Stack · .NET Core + Angular",
       icon: {
         type: "material-symbols-outlined",

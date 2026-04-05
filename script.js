@@ -42,6 +42,16 @@ const skillLabels = {
   methodologies: "Architecture & Methods"
 };
 
+function createBrandMarkSvg() {
+  return `
+    <svg class="brand__logo" viewBox="0 0 64 32" aria-hidden="true" focusable="false">
+      <path d="M22 8L12 16L22 24" />
+      <path d="M42 8L52 16L42 24" />
+      <path d="M36 6L28 26" />
+    </svg>
+  `;
+}
+
 const gridEffectConfig = {
   spacing: 23,
   dotRadius: 1,
@@ -90,6 +100,7 @@ function createProjectCard(project) {
   article.className = "project-card";
 
   const highlights = project.highlights
+    .slice(0, 2)
     .map((highlight) => `<li>${highlight}</li>`)
     .join("");
 
@@ -99,23 +110,26 @@ function createProjectCard(project) {
   const demoMarkup = hasDemoLink
     ? `<a class="project-card__link project-card__link--secondary" href="${project.demoLink}" target="_blank" rel="noreferrer">${project.demoLabel || "View Demo"}</a>`
     : "";
-  const iconMarkup = typeof project.icon === "object"
-    ? `<span class="${project.icon.type}" aria-hidden="true">${project.icon.name}</span>`
-    : `<span>${project.icon || project.title.charAt(0)}</span>`;
-
   const techTags = project.tech
     .map((t) => `<span class="skill-tag">${t}</span>`)
     .join("");
 
+  const mediaMarkup = project.image
+    ? `
+      <div class="project-card__media">
+        <img src="${project.image}" alt="${project.title} system diagram" loading="lazy">
+      </div>
+    `
+    : "";
+
   article.innerHTML = `
-    <div class="project-card__icon">${iconMarkup}</div>
-    <h3 class="project-card__title">${project.title}</h3>
-    <p class="project-card__service">${project.service || project.tech.join(" | ")}</p>
-    <div class="project-card__divider"></div>
+    ${mediaMarkup}
     <div class="project-card__body">
-      <p>${project.description}</p>
+      <p class="project-card__service">${project.service || project.tech.join(" | ")}</p>
+      <h3 class="project-card__title">${project.title}</h3>
+      <p class="project-card__summary">${project.description}</p>
       <ul class="project-card__list">${highlights}</ul>
-      <div class="skill-tags" style="margin-top:0.75rem">${techTags}</div>
+      <div class="project-card__tags">${techTags}</div>
     </div>
     <div class="project-card__footer">
       <a class="project-card__link" href="${projectHref}" target="_blank" rel="noreferrer">${projectLabel}</a>
@@ -144,7 +158,7 @@ function createExperienceCard(exp) {
     <div class="project-card__divider"></div>
     <div class="project-card__body">
       <ul class="project-card__list">${highlights}</ul>
-      <div class="skill-tags" style="margin-top:0.75rem">${techTags}</div>
+      <div class="project-card__tags">${techTags}</div>
     </div>
   `;
 
@@ -889,7 +903,7 @@ function renderPortfolio(data) {
   const footerEmail = app.querySelector(".footer__email");
   const footerLinks = app.querySelector(".footer__links");
 
-  brandMark.textContent = profile.brandMark;
+  brandMark.innerHTML = createBrandMarkSvg();
   brandName.textContent = profile.brandName;
 
   navigation.forEach((item) => {
