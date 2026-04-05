@@ -142,7 +142,7 @@ function createProjectCard(project) {
 
 function createExperienceCard(exp) {
   const article = document.createElement("article");
-  article.className = "project-card";
+  article.className = `project-card experience-card experience-card--${exp.timelineStatus || "past"}`;
 
   const highlights = exp.highlights
     .map((h) => `<li>${h}</li>`)
@@ -152,9 +152,21 @@ function createExperienceCard(exp) {
     .map((t) => `<span class="skill-tag">${t}</span>`)
     .join("");
 
+  const metaTags = (exp.tags || [])
+    .map((tag) => `<span class="experience-card__tag">${tag}</span>`)
+    .join("");
+
+  const dotLabel = exp.timelineStatus === "live" ? "Currently active role" : "Previous role";
+
   article.innerHTML = `
+    <div class="experience-card__rail" aria-hidden="true">
+      <span class="experience-card__dot" title="${dotLabel}"></span>
+    </div>
     <h3 class="project-card__title">${exp.role}</h3>
+    <div class="experience-card__meta">
+      <div class="experience-card__tag-row">${metaTags}</div>
     <p class="project-card__service">${exp.company} · ${exp.duration}</p>
+    </div>
     <div class="project-card__divider"></div>
     <div class="project-card__body">
       <ul class="project-card__list">${highlights}</ul>

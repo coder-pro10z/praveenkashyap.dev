@@ -827,6 +827,7 @@ span.highlight {
 
 .experience-list .project-card {
   padding: 22px;
+  position: relative;
 }
 
 .experience-list .project-card__body {
@@ -840,7 +841,7 @@ span.highlight {
 }
 
 .experience-list .project-card__service {
-  margin: 6px 0 0;
+  margin: 8px 0 0;
   font-size: 0.94rem;
 }
 
@@ -855,6 +856,76 @@ span.highlight {
 .experience-list .project-card__tags {
   justify-content: flex-start;
   margin-top: 0.75rem;
+}
+
+.experience-card__meta {
+  display: grid;
+  gap: 2px;
+}
+
+.experience-card__tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 3px;
+}
+
+.experience-card__tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(34, 197, 94, 0.38);
+  background: rgba(20, 83, 45, 0.16);
+  color: #86efac;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.experience-card__rail {
+  display: none;
+}
+
+.experience-card__dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: block;
+  position: relative;
+  background: #94a3b8;
+  box-shadow: 0 0 0 4px rgba(148, 163, 184, 0.08);
+}
+
+.experience-card__dot::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid rgba(148, 163, 184, 0.28);
+  animation: experience-dot-ripple 2.2s ease-out infinite;
+}
+
+.experience-card--live .experience-card__dot {
+  background: #22c55e;
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.12), 0 0 16px rgba(34, 197, 94, 0.22);
+}
+
+.experience-card--live .experience-card__dot::after {
+  border-color: rgba(34, 197, 94, 0.34);
+}
+
+@keyframes experience-dot-ripple {
+  0% {
+    opacity: 0.65;
+    transform: scale(0.75);
+  }
+
+  100% {
+    opacity: 0;
+    transform: scale(1.45);
+  }
 }
 
 /* Skills / About */
@@ -1228,6 +1299,35 @@ span.highlight {
 
   .projects {
     grid-template-columns: 1fr;
+  }
+
+  .experience-list {
+    position: relative;
+    gap: 18px;
+  }
+
+  .experience-list::before {
+    content: "";
+    position: absolute;
+    top: 22px;
+    bottom: 22px;
+    left: 12px;
+    width: 1px;
+    background: linear-gradient(180deg, rgba(34, 197, 94, 0.28), rgba(71, 85, 105, 0.26));
+    z-index: 0;
+  }
+
+  .experience-list .project-card {
+    padding-left: 38px;
+    z-index: 1;
+  }
+
+  .experience-card__rail {
+    display: block;
+    position: absolute;
+    left: 7px;
+    top: 25px;
+    z-index: 2;
   }
 
   .section {

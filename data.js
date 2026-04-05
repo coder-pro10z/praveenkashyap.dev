@@ -29,6 +29,8 @@ const portfolioData = {
       company: "Coforge",
       role: "Software Engineer",
       duration: "Jan 2024 - Present",
+      timelineStatus: "live",
+      tags: ["Coforge"],
       highlights: [
         "Lead development on ASP.NET Core APIs with role-based authorization - reduced auth-related bugs by enforcing policy-based access control",
         "Optimized SQL Server queries and EF Core configurations - improved endpoint response times on high-load routes",
@@ -42,6 +44,8 @@ const portfolioData = {
       company: "Coforge",
       role: "Graduate Engineer Trainee (GET)",
       duration: "Jul 2022 - Dec 2023",
+      timelineStatus: "past",
+      tags: ["Coforge"],
       highlights: [
         "Completed structured training in ASP.NET Core, Angular, SQL Server, and software engineering fundamentals",
         "Built internal training projects applying repository pattern, API design, and Angular module structure",
@@ -54,6 +58,8 @@ const portfolioData = {
       company: "Self-Initiated",
       role: "Web Developer Intern (Project-Based)",
       duration: "Jan 2022 - Jun 2022",
+      timelineStatus: "past",
+      tags: ["Self-Initiated", "Remote"],
       highlights: [
         "Built RentIt - a full-stack property rental marketplace using React, Node.js, and MongoDB",
         "Designed document-based MongoDB schema and implemented secure JWT authentication",
