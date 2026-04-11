@@ -9,7 +9,7 @@ const portfolioData = {
     links: {
       github: "https://github.com/coder-pro10z",
       linkedin: "https://www.linkedin.com/in/coder-pro10z/",
-      resume: "./Praveen_Kashyap_Dotnet_resume.pdf",
+      resume: "./Resume/Praveen_Kashyap_Dotnet_Resume_April.pdf",
       phone: "tel:+917394990738"
     },
     brandMark: "</>",
@@ -141,7 +141,7 @@ const portfolioData = {
   socialLinks: [
     { label: "LinkedIn", href: "https://www.linkedin.com/in/coder-pro10z/" },
     { label: "GitHub", href: "https://github.com/coder-pro10z" },
-    { label: "Resume", href: "./Praveen_Kashyap_Dotnet_resume.pdf" }
+    { label: "Resume", href: "./Resume/Praveen_Kashyap_Dotnet_Resume_April.pdf" }
   ],
 
   navigation: [
@@ -155,7 +155,7 @@ const portfolioData = {
     eyebrow: "Full Stack .NET Developer · 3 Years",
     actions: [
       { label: "Projects", href: "#portfolio", variant: "primary" },
-      { label: "Resume", href: "./Praveen_Kashyap_Dotnet_resume.pdf", variant: "success" }
+      { label: "Resume", href: "./Resume/Praveen_Kashyap_Dotnet_Resume_April.pdf", variant: "success" }
     ]
   },
 
